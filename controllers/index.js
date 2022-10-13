@@ -17,15 +17,32 @@ class ControllerHome {
     //     res.send(err)
     //   })
     Course.findAll()
-    .then(crs => {
-      res.send(crs)
-    })
-    .catch(err => {
-      res.send(err)
-    })
+      .then(crs => {
+        res.render('public/index', {crs})
+      })
+      .catch(err => {
+        res.send(err)
+      })
   }
 
-  static show
+  static login(req,res){
+    res.render('public/login')
+  }
+  static register(req,res){
+    res.render('public/register')
+  }
+
+  static userHome(req,res){
+    res.render('user/index')
+  }
+
+  static userProfile(req,res){
+    res.render('user/profile')
+  }
+
+  static userCourse(req,res){
+    res.render('user/userCourses')
+  }
 }
 
 module.exports = ControllerHome
