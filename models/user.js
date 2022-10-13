@@ -53,6 +53,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.beforeCreate((user, options) => {
+    const hash = ''
+    user.password = hash
     user.role = 'student'
   })
   return User;
