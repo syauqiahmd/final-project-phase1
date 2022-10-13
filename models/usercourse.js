@@ -12,6 +12,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    get statusCourse() {
+      if (this.isComplete === true) {
+        return 'Clear'
+      }
+      return 'Ongoing'
+    }
+
+    get statusPayment() {
+      if (this.paymentStatus === true) {
+        return 'Paid'
+      }
+      return 'Unpaid'
+    }
+
   }
   UserCourse.init({
     paymentStatus: DataTypes.BOOLEAN,

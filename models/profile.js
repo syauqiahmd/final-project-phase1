@@ -13,11 +13,51 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profile.belongsTo(models.User)
     }
+
+    get formattedDate() {
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      let formattedDate = this.dateOfBirth.toLocaleDateString('id-ID', options)
+      return formattedDate.split('/').reverse().join('-')
+    }
+
   }
   Profile.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    dateOfBirth: DataTypes.DATE,
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'First Name must be filled'
+        },
+        notNull: {
+          msg: 'First Name must be filled'
+        }
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Last Name must be filled'
+        },
+        notNull: {
+          msg: 'Last Name must be filled'
+        }
+      }
+    },
+    dateOfBirth: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Date Of Birth must be filled'
+        },
+        notNull: {
+          msg: 'Date Of Birth must be filled'
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

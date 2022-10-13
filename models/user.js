@@ -21,12 +21,38 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'E-mail must be filled'
+        },
+        notNull: {
+          msg: 'E-mail must be filled'
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Password must be filled'
+        },
+        notNull: {
+          msg: 'Password must be filled'
+        }
+      }
+    },
     role: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
   });
+
+  User.beforeCreate((user, options) => {
+    user.role = 'student'
+  })
   return User;
 };
