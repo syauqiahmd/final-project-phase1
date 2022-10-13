@@ -1,5 +1,6 @@
 const { Category, Course, UserCourse, User, Profile } = require('../models')
 const { Op } = require('sequelize')
+const bcryptjs = require('bcryptjs')
 
 class ControllerHome {
   static home(req, res) {
@@ -29,6 +30,7 @@ class ControllerHome {
 
   static redirectLogin(req, res) {
     const { email, password } = req.body
+    let userid;
     User.findOne({
       where: {
         email: email
@@ -45,9 +47,8 @@ class ControllerHome {
         res.redirect(`/login?err=${errorPw}`)
       })
       .then(result => {
-
-        const { id } = result.dataValues.id
-        res.redirect(`/users/${id}`)
+        userid = result.dataValues.id
+        res.redirect(`/users/${userid}`)
       })
       .catch(err => {
         let errors = err
