@@ -4,9 +4,12 @@ const router = express.Router()
 
 router.get('/', ControllerHome.home)
 router.get('/login', ControllerHome.login)
+router.post('/login', ControllerHome.redirectLogin)
 router.get('/register', ControllerHome.register)
-router.get('/users', ControllerHome.userHome)
-router.get('/users/profile', ControllerHome.userProfile)
-router.get('/users/course', ControllerHome.userCourse)
+router.post('/register', ControllerHome.createUserProfile)
+router.get('/users/:id', ControllerHome.userHome)
+router.get('/users/:id/profile', ControllerHome.userProfile)
+router.post('/users/:id/profile', ControllerHome.editProfile)
+router.get('/users/:id/course', ControllerHome.userCourse)
 
 module.exports = router
