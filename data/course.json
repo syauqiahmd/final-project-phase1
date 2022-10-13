@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Title 1",
+        "description": "This is a template description",
+        "duration": 5,
+        "price": 227938,
+        "CategoryId": 1
+    },
+    {
+        "name": "Title 2",
+        "description": "This is another one",
+        "duration": 6,
+        "price": 389011,
+        "CategoryId": 2
+    },
+    {
+        "name": "Title 3",
+        "description": "Another one",
+        "duration": 2,
+        "price": 167528,
+        "CategoryId": 5
+    },
+    {
+        "name": "Title 4",
+        "description": "This is a template description",
+        "duration": 3,
+        "price": 283282,
+        "CategoryId": 3
+    },
+    {
+        "name": "Title 5",
+        "description": "This is another one",
+        "duration": 4,
+        "price": 326770,
+        "CategoryId": 4
+    },
+    {
+        "name": "Title 6",
+        "description": "Another one",
+        "duration": 2,
+        "price": 316668,
+        "CategoryId": 3
+    }
+]
