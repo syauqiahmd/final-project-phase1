@@ -93,7 +93,25 @@ class ControllerHome {
     }
   }
 
-  static userHome(req, res) {
+  static userCourse(req, res) {
+    // const {id} = req.query
+    const { id } = req.params
+    let id_test
+    Course.findAll({
+      include: {
+        model: User
+      }
+    })
+      .then(course => {
+        id_test = course[0].Users[0].UserCourse.UserId
+        res.render('user/index', { course, id, id_test })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
+  static userEnrolledCourse(req, res) {
     // const {id} = req.query
     const { id } = req.params
     User.findOne({
@@ -109,7 +127,7 @@ class ControllerHome {
       }
     })
       .then(user => {
-        res.render('user/index', { user })
+        res.render('user/userCourses', { user, id })
       })
       .catch(err => {
         res.send(err)
@@ -131,12 +149,11 @@ class ControllerHome {
       }
     })
       .then(user => {
-        res.render('user/index', { user })
+        res.render('user/profile', { user, id })
       })
       .catch(err => {
         res.send(err)
       })
-    res.render('user/profile')
   }
 
   static editProfile(req, res) {
@@ -147,7 +164,7 @@ class ControllerHome {
       }
     })
       .then(user => {
-        res.render('user/index', { user })
+        res.render('user/index', { user, id })
         // res.send(user)
       })
       .catch(err => {
@@ -156,9 +173,36 @@ class ControllerHome {
     res.render('user/profile')
   }
 
-  static userCourse(req, res) {
-    res.render('user/userCourses')
+  static enrollCourse(req, res){
+    const { id, courseId } = req.params
+    UserCourse.findAll({
+      where: {
+        UserId: id,
+        CourseId: courseId
+      }
+    })
+      .then(result=>{
+        if(result.length!=0){
+          res.redirect(`/users/${id}`)
+        } else {
+          // res.redirect(`/users/${id}?err=CourseEnrolled`)
+          return result
+        }
+      })
+      .then(result=>{
+        return UserCourse.create({UserId:id, CourseId: courseId})
+      })
+      .then(result=>{
+        res.redirect(`/users/${id}?success=enrolled`)
+      })
+      .catch(err=>{
+        res.send(err)
+      })
   }
+
+  // static userCourse(req, res) {
+  //   res.render('user/userCourses')
+  // }
 }
 
 module.exports = ControllerHome
