@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       return formattedDate.split('/').reverse().join('-')
     }
 
+    get fullName(){
+      return ` ${this.firstName} ${this.lastName}`
+    }
+
   }
   Profile.init({
     firstName: {

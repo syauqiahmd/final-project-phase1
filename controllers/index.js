@@ -112,20 +112,10 @@ class ControllerHome {
   }
 
   static userEnrolledCourse(req, res) {
-    // const {id} = req.query
     const { id } = req.params
-    User.findOne({
-      include: [{
-        model: Course
-      },
-      {
-        model: Profile
-      }]
-      ,
-      where: {
-        id: id
-      }
-    })
+    User.findByPk(id, 
+      {include: [Profile, Course]}
+      )
       .then(user => {
         res.render('user/userCourses', { user, id })
       })
@@ -176,26 +166,53 @@ class ControllerHome {
     })
       .then(result=>{
         if(result.length!=0){
-          res.redirect(`/users/${id}`)
+          return res.redirect(`/users/${id}?err=test`)
         } else {
-          // res.redirect(`/users/${id}?err=CourseEnrolled`)
-          return result
+          return UserCourse.create({UserId:id, CourseId: courseId})
+          .then(result=>{
+            res.redirect(`/users/${id}?success=enrolled`)
+          })
+          .catch(err=>{
+            res.send(err)
+          })
         }
-      })
-      .then(result=>{
-        return UserCourse.create({UserId:id, CourseId: courseId})
-      })
-      .then(result=>{
-        res.redirect(`/users/${id}?success=enrolled`)
       })
       .catch(err=>{
         res.send(err)
       })
   }
 
-  // static userCourse(req, res) {
-  //   res.render('user/userCourses')
-  // }
+  static destroyUserCourse(req, res){
+    const { id, userCourseId } = req.params
+    UserCourse.destroy({
+      where:{
+        UserId: id,
+        CourseId:userCourseId
+      }
+    })
+      .then(result=>{
+        res.redirect(`/users/${id}/course`)
+      })
+      .catch(err=>{
+        res.send(err)
+      })
+  }
+
+  static updateUserCourseStatus(req, res){
+    const { id, userCourseId } = req.params
+    UserCourse.update({isComplete:true},{
+      where:{
+        UserId: id,
+        CourseId:userCourseId
+      }
+    })
+      .then(result=>{
+        res.redirect(`/users/${id}/course`)
+      })
+      .catch(err=>{
+        res.send(err)
+      })
+  }
 }
 
 module.exports = ControllerHome

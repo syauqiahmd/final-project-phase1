@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const {getTime} = require('../helpers/formating')
 const bcryptjs = require('bcryptjs')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -20,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         through: models.UserCourse
       })
     }
+
   }
   User.init({
     email: {

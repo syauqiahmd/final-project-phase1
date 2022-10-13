@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
       return 'Unpaid'
     }
 
+    get formattedDate(){
+      return this.createdAt.toLocaleDateString('en-GB').split('/').reverse().join('-');
+    }
+
   }
   UserCourse.init({
     paymentStatus: DataTypes.BOOLEAN,

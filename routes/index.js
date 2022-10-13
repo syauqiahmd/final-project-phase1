@@ -12,5 +12,7 @@ router.get('/users/:id/profile', ControllerHome.userProfile)
 router.post('/users/:id/profile', ControllerHome.editProfile)
 router.get('/users/:id/course', ControllerHome.userEnrolledCourse)
 router.get('/users/:id/enroll/:courseId', ControllerHome.enrollCourse)
+router.get('/users/:id/destroy/:userCourseId', ControllerHome.destroyUserCourse)
+router.get('/users/:id/status/:userCourseId', ControllerHome.updateUserCourseStatus)
 
 module.exports = router
