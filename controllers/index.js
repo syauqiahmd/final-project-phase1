@@ -1,6 +1,7 @@
 const { Category, Course, UserCourse, User, Profile } = require('../models')
 const { Op } = require('sequelize')
 const bcryptjs = require('bcryptjs')
+// const session = require('express-session')
 
 class ControllerHome {
   static home(req, res) {
@@ -13,7 +14,6 @@ class ControllerHome {
                   [Op.iLike]: `%${search}%` 
               }
           }
-
   }
     Course.findAll(options)
       .then(crs => {
@@ -38,17 +38,18 @@ class ControllerHome {
     })
       .then(result => {
         let inputPw = password
-        let dataPw = result.dataValues.password
+        let dataPw = result.password
         let pwCheck = bcryptjs.compareSync(inputPw, dataPw)
-        if (pwCheck) {
-          return result
+        if (pwCheck == false) {
+          //gagal login
+          let errorPw = 'Password-Incorrect'
+          return res.redirect(`/login?err=${errorPw}`)
+        } else {
+          //berhasil login
+          userid = result.id
+          req.session.email = result.email
+          res.redirect(`/users/${userid}`)
         }
-        let errorPw = 'Password-Incorrect'
-        res.redirect(`/login?err=${errorPw}`)
-      })
-      .then(result => {
-        userid = result.dataValues.id
-        res.redirect(`/users/${userid}`)
       })
       .catch(err => {
         let errors = err
@@ -117,9 +118,9 @@ class ControllerHome {
 
   static userEnrolledCourse(req, res) {
     const { id } = req.params
-    User.findByPk(id, 
-      {include: [Profile, Course]}
-      )
+    User.findByPk(id,
+      { include: [Profile, Course] }
+    )
       .then(user => {
         res.render('user/userCourses', { user, id })
       })
@@ -131,7 +132,7 @@ class ControllerHome {
   static userProfile(req, res) {
     const { id } = req.params
     Profile.findOne({
-      where:{
+      where: {
         UserId: id
       }
     })
@@ -146,8 +147,8 @@ class ControllerHome {
 
   static editProfile(req, res) {
     const { id } = req.params
-    const { firstName, lastName, dateOfBirth} = req.body
-    Profile.update({firstName:firstName, lastName:lastName, dateOfBirth:dateOfBirth}, {
+    const { firstName, lastName, dateOfBirth } = req.body
+    Profile.update({ firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth }, {
       where: {
         UserId: id
       }
@@ -160,7 +161,7 @@ class ControllerHome {
       })
   }
 
-  static enrollCourse(req, res){
+  static enrollCourse(req, res) {
     const { id, courseId } = req.params
     UserCourse.findAll({
       where: {
@@ -168,55 +169,61 @@ class ControllerHome {
         CourseId: courseId
       }
     })
-      .then(result=>{
-        if(result.length!=0){
+      .then(result => {
+        if (result.length != 0) {
           return res.redirect(`/users/${id}?err=test`)
         } else {
-          return UserCourse.create({UserId:id, CourseId: courseId})
-          .then(result=>{
-            res.redirect(`/users/${id}?success=enrolled`)
-          })
-          .catch(err=>{
-            res.send(err)
-          })
+          return UserCourse.create({ UserId: id, CourseId: courseId })
+            .then(result => {
+              res.redirect(`/users/${id}?success=enrolled`)
+            })
+            .catch(err => {
+              res.send(err)
+            })
         }
       })
-      .catch(err=>{
+      .catch(err => {
         res.send(err)
       })
   }
 
-  static destroyUserCourse(req, res){
+  static destroyUserCourse(req, res) {
     const { id, userCourseId } = req.params
     UserCourse.destroy({
-      where:{
+      where: {
         UserId: id,
-        CourseId:userCourseId
+        CourseId: userCourseId
       }
     })
-      .then(result=>{
+      .then(result => {
         res.redirect(`/users/${id}/course`)
       })
-      .catch(err=>{
+      .catch(err => {
         res.send(err)
       })
   }
 
-  static updateUserCourseStatus(req, res){
+  static updateUserCourseStatus(req, res) {
     const { id, userCourseId } = req.params
-    UserCourse.update({isComplete:true},{
-      where:{
+    UserCourse.update({ isComplete: true }, {
+      where: {
         UserId: id,
-        CourseId:userCourseId
+        CourseId: userCourseId
       }
     })
-      .then(result=>{
+      .then(result => {
         res.redirect(`/users/${id}/course`)
       })
-      .catch(err=>{
+      .catch(err => {
         res.send(err)
       })
   }
+
+  static destroySession(req,res){
+    req.session.destroy(function (err) {
+      res.redirect('/'); //Inside a callback… bulletproof!
+     })
+    }
 }
 
 module.exports = ControllerHome
