@@ -8,5 +8,6 @@ router.get('/register', ControllerHome.register)
 router.get('/users', ControllerHome.userHome)
 router.get('/users/profile', ControllerHome.userProfile)
 router.get('/users/course', ControllerHome.userCourse)
+router.get('/users/print', ControllerHome.print)
 
 module.exports = router

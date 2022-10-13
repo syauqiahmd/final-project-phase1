@@ -1,4 +1,5 @@
 const { Category, Course, UserCourse, User, Profile } = require('../models')
+const InvoiceBill = require('invoice-bill');
 
 class ControllerHome {
   static home(req, res) {
@@ -42,6 +43,27 @@ class ControllerHome {
 
   static userCourse(req,res){
     res.render('user/userCourses')
+  }
+
+  static print(req, res){
+    const sample = new InvoiceBill({
+      billIDGenerator: {preFlightValue: 1, mode: 'padding'},
+      currency: 'IDR',
+      from: {issuer: 'RuangTuru'},
+      to: 'Some body',
+    });
+    sample.newRecords({itemName: 'test1', itemBasePrice: 10});
+    sample.newRecords({itemName: 'test2', itemBasePrice: 5, itemCount: 2, discount: 5});
+    const test = sample.renderToHTML();
+    require('fs').writeFileSync('test.html', test);
+    sample.renderPDF('./public/invoices-generated', {format: 'Letter', orientation: 'landscape'})
+      .then((filePath) => {
+        console.log(`PDF file generated @ ${filePath}`)
+        res.redirect('/')
+      })
+      .catch((err) => {
+        res.send(err);
+      });
   }
 }
 

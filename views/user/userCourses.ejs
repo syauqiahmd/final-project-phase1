@@ -18,7 +18,10 @@
             <td><%= i %> </td>
             <td></td>
             <td></td>
-            <td><button class="btn btn-sm btn-primary"><%= i%2==0? 'ongoing':'done' %></button></td>
+            <td>
+              <button class="btn btn-sm btn-primary"><%= i%2==0? 'ongoing':'done' %></button>
+              <a class="btn btn-sm btn-primary">Invoice</a>
+            </td>
           </tr>
         <% } %>
       </tbody>
