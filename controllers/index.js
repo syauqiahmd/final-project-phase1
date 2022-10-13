@@ -94,17 +94,21 @@ class ControllerHome {
   }
 
   static userCourse(req, res) {
-    // const {id} = req.query
     const { id } = req.params
+    const { filter } = req.query
+    console.log(filter)
+    let option = Course.getCourseByCategory(filter)
+    option.include = User
+
     let id_test
-    Course.findAll({
-      include: {
-        model: User
-      }
-    })
-      .then(course => {
-        id_test = course[0].Users[0].UserCourse.UserId
-        res.render('user/index', { course, id, id_test })
+    let course
+    Course.findAll(option)
+      .then(result => {
+        course = result
+        return Category.findAll()
+      })
+      .then(categories =>{
+        res.render('user/index', { course, categories, id, id_test })
       })
       .catch(err => {
         res.send(err)
