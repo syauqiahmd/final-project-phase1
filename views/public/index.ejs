@@ -19,13 +19,14 @@
   <h2 class="pb-2 border-bottom">Course List</h2>
   <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
     <% crs.forEach(element => { %>
-      <div class="col d-flex align-items-start">
+      <div class="col d-flex align-items-start mb-4">
         <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
           <img src="/public/images/logo.png" class="bi me-4" height="64" alt="" >
         </div>
         <div>
-          <h3 class="fs-2"><%= element.name  %> </h3>
-          <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+          <h4><%= element.name  %></h4>
+          <p class="text-muted"><%= element.pricingFormatted %></p>
+          <p><%= element.description %></p>
         </div>
       </div>
     <% }) %>
