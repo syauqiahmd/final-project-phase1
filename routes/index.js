@@ -18,6 +18,8 @@ router.use((req, res, next) => {
     }
 })
 
+router.get('/logout', ControllerHome.destroySession)
+
 router.get('/users/:id', ControllerHome.userCourse)
 router.get('/users/:id/profile', ControllerHome.userProfile)
 router.post('/users/:id/profile', ControllerHome.editProfile)
@@ -25,6 +27,6 @@ router.get('/users/:id/course', ControllerHome.userEnrolledCourse)
 router.get('/users/:id/enroll/:courseId', ControllerHome.enrollCourse)
 router.get('/users/:id/destroy/:userCourseId', ControllerHome.destroyUserCourse)
 router.get('/users/:id/status/:userCourseId', ControllerHome.updateUserCourseStatus)
-router.get('/logout', ControllerHome.destroySession)
+router.get('/users/:id/print/:userCourseId', ControllerHome.print)
 
 module.exports = router
