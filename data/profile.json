@@ -1,0 +1,20 @@
+[
+    {
+        "firstName": "Anaël",
+        "lastName": "Temple",
+        "dateOfBirth": "1998-04-17T22:57:17Z",
+        "UserId": 1
+    },
+    {
+        "firstName": "Maïlys",
+        "lastName": "Hesey",
+        "dateOfBirth": "1993-12-08T06:01:34Z",
+        "UserId": 2
+    },
+    {
+        "firstName": "Yáo",
+        "lastName": "Gerrelt",
+        "dateOfBirth": "1992-03-09T23:11:05Z",
+        "UserId": 3
+    }
+]
