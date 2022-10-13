@@ -7,15 +7,14 @@ class ControllerHome {
   static home(req, res) {
     const { search } = req.query
     let options = {}
+    options.include = User
     if (search) {
-      options = {
-        where: {
-          name: {
-            [Op.iLike]: `%${search}%`
+      options.where= {
+              name: {
+                  [Op.iLike]: `%${search}%` 
+              }
           }
-        }
-      }
-    }
+  }
     Course.findAll(options)
       .then(crs => {
         res.render('public/index', { crs })
