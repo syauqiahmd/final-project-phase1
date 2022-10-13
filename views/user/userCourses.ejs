@@ -22,7 +22,7 @@
             <td><%= element.dataValues.UserCourse.formattedDate %></td>
             <td><%= element.dataValues.UserCourse.statusPayment %></td>
             <td>
-              <a href="" class="btn btn-sm btn-<%= element.dataValues.UserCourse.statusCourse === 'Clear'? 'success':'secondary' %> w-100"><%= element.dataValues.UserCourse.statusCourse %></a>
+              <a href="/users/<%= id %>/status/<%= element.dataValues.UserCourse.CourseId %>" class="btn btn-sm btn-<%= element.dataValues.UserCourse.statusCourse === 'Clear'? 'success':'secondary' %> w-100"><%= element.dataValues.UserCourse.statusCourse %></a>
             </td>
             <td>
               <a href="/users/<%= id %>/destroy/<%= element.dataValues.UserCourse.CourseId %>" class="btn btn-danger btn-sm">Delete</a>

@@ -117,7 +117,6 @@ class ControllerHome {
       {include: [Profile, Course]}
       )
       .then(user => {
-        console.log(user)
         res.render('user/userCourses', { user, id })
       })
       .catch(err => {
@@ -186,6 +185,22 @@ class ControllerHome {
   static destroyUserCourse(req, res){
     const { id, userCourseId } = req.params
     UserCourse.destroy({
+      where:{
+        UserId: id,
+        CourseId:userCourseId
+      }
+    })
+      .then(result=>{
+        res.redirect(`/users/${id}/course`)
+      })
+      .catch(err=>{
+        res.send(err)
+      })
+  }
+
+  static updateUserCourseStatus(req, res){
+    const { id, userCourseId } = req.params
+    UserCourse.update({isComplete:true},{
       where:{
         UserId: id,
         CourseId:userCourseId
