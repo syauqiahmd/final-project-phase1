@@ -136,19 +136,13 @@ class ControllerHome {
 
   static userProfile(req, res) {
     const { id } = req.params
-    User.findOne({
-      include: [{
-        model: Course
-      },
-      {
-        model: Profile
-      }]
-      ,
-      where: {
-        id: id
+    Profile.findOne({
+      where:{
+        UserId: id
       }
     })
       .then(user => {
+        // res.send(user)
         res.render('user/profile', { user, id })
       })
       .catch(err => {
@@ -158,19 +152,18 @@ class ControllerHome {
 
   static editProfile(req, res) {
     const { id } = req.params
-    Profile.update({
+    const { firstName, lastName, dateOfBirth} = req.body
+    Profile.update({firstName:firstName, lastName:lastName, dateOfBirth:dateOfBirth}, {
       where: {
-        id: id
+        UserId: id
       }
     })
       .then(user => {
-        res.render('user/index', { user, id })
-        // res.send(user)
+        res.redirect(`/users/${id}`)
       })
       .catch(err => {
         res.send(err)
       })
-    res.render('user/profile')
   }
 
   static enrollCourse(req, res){

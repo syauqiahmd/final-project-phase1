@@ -5,16 +5,15 @@
   <div class="container-fluid py-2">
     <h2 class="text-center">Profile</h2>
     <hr>
-    <form action="" method="post">
+    <form action="/users/<%= id %>/profile" method="post">
       <label for="firstName" class="form-label mt-3">First Name</label>
-      <input type="text" name="firstName" id="firstName" class="form-control">
+      <input type="text" name="firstName" id="firstName" class="form-control" value="<%= user.firstName %> "> 
 
       <label for="lastName" class="form-label mt-3">Last Name</label>
-      <input type="text" name="lastName" id="lastName" class="form-control">
+      <input type="text" name="lastName" id="lastName" class="form-control" value="<%= user.lastName %>">
 
       <label for="dateOfBirth" class="form-label mt-3">Date of Birth</label>
-      <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control">
-
+      <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" value="<%= (user.dateOfBirth).toLocaleDateString('en-GB').split('/').reverse().join('-') %>">
       <input type="submit" class="btn btn-md btn-primary mt-4" value="Update Data">
     </form>
   </div>
