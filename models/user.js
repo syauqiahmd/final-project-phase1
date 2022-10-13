@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         notNull: {
           msg: 'E-mail must be filled'
-        }
+        },
+        isEmail: true
       }
     },
     password: {

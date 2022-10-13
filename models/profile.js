@@ -55,6 +55,17 @@ module.exports = (sequelize, DataTypes) => {
         },
         notNull: {
           msg: 'Date Of Birth must be filled'
+        },
+        isMinAge(value){
+          if(!value){
+            throw new Error('Date of birth required')
+          } else {
+            let today = new Date();
+            let age = today.getFullYear() - value.getFullYear()
+            if(age < 10){
+              throw new Error('Age must be at least 10 years old')
+            }
+          }
         }
       }
     },
