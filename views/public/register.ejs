@@ -1,0 +1,28 @@
+<%+ extend('layout/app')  %> 
+<%+ section('title', 'Home') %> 
+<%+ section('content') %> 
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-2">
+    <h2 class="text-center">Register</h2>
+    <hr>
+    <form action="" method="post">
+      <label for="firstName" class="form-label mt-3">First Name</label>
+      <input type="text" name="firstName" id="firstName" class="form-control">
+
+      <label for="lastName" class="form-label mt-3">Last Name</label>
+      <input type="text" name="lastName" id="lastName" class="form-control">
+
+      <label for="dateOfBirth" class="form-label mt-3">Date of Birth</label>
+      <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control">
+
+      <label for="email" class="form-label mt-3">Email</label>
+      <input type="email" name="email" id="email" class="form-control">
+
+      <label for="password" class="form-label mt-3">Password</label>
+      <input type="password" name="password" id="password" class="form-control">
+
+      <input type="submit" class="btn btn-md btn-primary mt-4" value="Sign-up">
+    </form>
+  </div>
+</div>
+<%+ endSection %>

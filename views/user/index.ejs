@@ -1,0 +1,41 @@
+<%+ extend('layout/user')  %> 
+<%+ section('title', 'Home') %> 
+<%+ section('content') %> 
+<div class="container px-4 py-5" id="course">
+  <h2 class="pb-2 border-bottom">Course List</h2>
+
+  <!-- form search -->
+  <div class="input-group mb-3 mt-3">
+    <input type="text" class="form-control" placeholder="search course by name" aria-label="search course by name">
+    <button class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
+  </div>
+
+  <!-- filter by category -->
+  <hr class="mb-4">
+  <div class="text-center mb-4">
+    <div class="btn-group" role="group" aria-label="Basic outlined example">
+      <a href="/employees?category=" class="btn btn-outline-primary">All</a>
+      <a href="/employees?category=1" class="btn btn-outline-primary">1</a>
+      <a href="/employees?category=2" class="btn btn-outline-primary">2</a>
+      <a href="/employees?category=3" class="btn btn-outline-primary">3</a>
+      <a href="/employees?category=4" class="btn btn-outline-primary">4</a>
+    </div>
+  </div>
+
+  <hr>
+  <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+    <% for( let i = 0; i < 5; i++ ) { %>
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <img src="/public/images/logo.png" class="bi me-4" height="64" alt="" >
+        </div>
+        <div>
+          <h3 class="fs-2">Featured title</h3>
+          <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+          <button class="btn btn-primary btn-sm" >Eroll Now</button>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+<%+ endSection %>
