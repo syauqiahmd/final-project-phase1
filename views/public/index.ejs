@@ -10,7 +10,7 @@
       <h1 class="display-5 fw-bold lh-1 mb-3">Transform your life through education</h1>
       <p class="lead">Learners around the world are launching new careers, advancing in their fields, and enriching their lives.</p>
       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a href="" class="btn btn-primary btn-lg px-4 me-md-2">Sign-up Now</a>
+        <a href="/register" class="btn btn-primary btn-lg px-4 me-md-2">Sign-up Now</a>
       </div>
     </div>
   </div>
@@ -25,7 +25,12 @@
         </div>
         <div>
           <h4><%= element.name  %></h4>
-          <p class="text-muted"><%= element.pricingFormatted %></p>
+          <p class="text-muted"><%= element.pricingFormatted %>
+            <br>
+            <small>
+              has been enrolled by <%= element.dataValues.Users.length %> user
+            </small>
+          </p>
           <p><%= element.description %></p>
         </div>
       </div>
