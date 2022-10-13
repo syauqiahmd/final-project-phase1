@@ -215,6 +215,12 @@ class ControllerHome {
         res.send(err)
       })
   }
+
+  static destroySession(req,res){
+    req.session.destroy(function (err) {
+      res.redirect('/'); //Inside a callback… bulletproof!
+     })
+    }
 }
 
 module.exports = ControllerHome

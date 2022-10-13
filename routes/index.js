@@ -25,5 +25,6 @@ router.get('/users/:id/course', ControllerHome.userEnrolledCourse)
 router.get('/users/:id/enroll/:courseId', ControllerHome.enrollCourse)
 router.get('/users/:id/destroy/:userCourseId', ControllerHome.destroyUserCourse)
 router.get('/users/:id/status/:userCourseId', ControllerHome.updateUserCourseStatus)
+router.get('/logout', ControllerHome.destroySession)
 
 module.exports = router
