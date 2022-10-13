@@ -1,6 +1,7 @@
 const { Category, Course, UserCourse, User, Profile } = require('../models')
 const { Op } = require('sequelize')
 const bcryptjs = require('bcryptjs')
+const InvoiceBill = require('invoice-bill');
 // const session = require('express-session')
 
 class ControllerHome {
@@ -222,8 +223,38 @@ class ControllerHome {
   static destroySession(req,res){
     req.session.destroy(function (err) {
       res.redirect('/'); //Inside a callback… bulletproof!
-     })
-    }
+    })
+  }
+
+  static print(req, res){
+    const { id, userCourseId } = req.params
+    const invoice = new InvoiceBill({
+      billIDGenerator: {preFlightValue: 1, mode: 'padding'},
+      currency: 'IDR',
+      from: {issuer: 'RuangTuru'},
+      to: 'Some body',
+    });
+    let dataCourse
+    Course.findByPk(userCourseId)
+      .then(result=>{
+        dataCourse = result
+      })
+      .catch(err=>{
+        res.send(err)
+      })
+    invoice.newRecords({itemName: 'test1', itemBasePrice: 10});
+    invoice.newRecords({itemName: 'test2', itemBasePrice: 5, itemCount: 2, discount: 5});
+    invoice.renderPDF('./public/invoices-generated', {format: 'Letter', orientation: 'landscape'})
+      .then((filePath) => {
+        let newPath = filePath.split('/')
+        newPath = newPath[newPath.length-1]
+        console.log(`PDF file generated @ ${newPath}`)
+        res.render('user/printPreview', {newPath})
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
 }
 
 module.exports = ControllerHome
