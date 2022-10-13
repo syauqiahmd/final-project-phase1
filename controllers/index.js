@@ -114,19 +114,11 @@ class ControllerHome {
   static userEnrolledCourse(req, res) {
     // const {id} = req.query
     const { id } = req.params
-    User.findOne({
-      include: [{
-        model: Course
-      },
-      {
-        model: Profile
-      }]
-      ,
-      where: {
-        id: id
-      }
-    })
+    User.findByPk(id, 
+      {include: [Profile, Course]}
+      )
       .then(user => {
+        console.log(user)
         res.render('user/userCourses', { user, id })
       })
       .catch(err => {
@@ -193,9 +185,21 @@ class ControllerHome {
       })
   }
 
-  // static userCourse(req, res) {
-  //   res.render('user/userCourses')
-  // }
+  static destroyUserCourse(req, res){
+    const { id, userCourseId } = req.params
+    UserCourse.destroy({
+      where:{
+        UserId: id,
+        CourseId:userCourseId
+      }
+    })
+      .then(result=>{
+        res.redirect(`/users/${id}/course`)
+      })
+      .catch(err=>{
+        res.send(err)
+      })
+  }
 }
 
 module.exports = ControllerHome
