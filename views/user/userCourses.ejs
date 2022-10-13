@@ -1,0 +1,28 @@
+<%+ extend('layout/user')  %> 
+<%+ section('title', 'Home') %> 
+<%+ section('content') %> 
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-2">
+    <h2 class="text-center">Course Enrolled By <code>nama user</code></h2>
+    <hr>
+    <table class="table">
+      <thead>
+        <th>#</th>
+        <th>Course Name</th>
+        <th>Date Enrolled</th>
+        <th>Status</th>
+      </thead>
+      <tbody>
+        <% for( let i = 1; i < 10; i++ ) { %>
+          <tr>
+            <td><%= i %> </td>
+            <td></td>
+            <td></td>
+            <td><button class="btn btn-sm btn-primary"><%= i%2==0? 'ongoing':'done' %></button></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%+ endSection %>
